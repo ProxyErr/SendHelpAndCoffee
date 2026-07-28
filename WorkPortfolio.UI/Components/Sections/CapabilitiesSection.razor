@@ -1,0 +1,63 @@
+@inject PortfolioService Portfolio
+
+<section id="capabilities" class="portfolio-section capabilities-section" data-scroll-section>
+    <div class="section-header section-header--split">
+        <div>
+            <div class="section-kicker">02 / CAPABILITIES</div>
+            <h2 class="section-title section-title--display">One practice.<br />Multiple frequencies.</h2>
+        </div>
+        <p class="section-aside-copy">
+            I work across design and engineering, closing the gap between a strong concept
+            and a production-ready product.
+        </p>
+    </div>
+
+    <div class="capabilities-layout">
+        <div class="section-panel capability-signal-panel">
+            <div class="panel-header-row">
+                <span>CORE PERFORMANCE</span>
+                <Blazicon Svg="Lucide.WifiHigh" class="section-lucide" />
+            </div>
+
+            <div class="capability-meter-list">
+                @foreach (var capability in Portfolio.GetCapabilities())
+                {
+                    <div class="capability-meter-row">
+                        <div class="capability-meter-copy">
+                            <span class="capability-meter-icon">{ }</span>
+                            <span>@capability.Key</span>
+                        </div>
+                        <span class="capability-meter-value">@capability.Value%</span>
+                        <div class="capability-meter-track">
+                            <div class="capability-meter-fill" style="width:@($"{capability.Value}%")"></div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="capability-card-grid">
+            @foreach (var card in CapabilityCards)
+            {
+                <article class="section-panel capability-card-panel">
+                    <div class="capability-card-index">@card.Index</div>
+                    <div class="capability-card-icon">@card.Icon</div>
+                    <h3>@card.Title</h3>
+                    <p>@card.Description</p>
+                </article>
+            }
+        </div>
+    </div>
+</section>
+
+@code {
+    private List<CapabilityCardModel> CapabilityCards { get; } =
+    [
+        new("01", "</>", "Digital products", "Interfaces, prototypes, frontend architecture, and polished implementation."),
+        new("02", "◌", "Design systems", "Flexible foundations that help teams create faster without losing coherence."),
+        new("03", "◎", "Brand experiences", "Expressive web experiences that make an identity feel alive and distinct."),
+        new("04", "↗", "Product launch", "Focused creative direction from first narrative through final deployment.")
+    ];
+
+    public record CapabilityCardModel(string Index, string Icon, string Title, string Description);
+}

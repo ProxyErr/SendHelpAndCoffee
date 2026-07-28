@@ -1,0 +1,40 @@
+@inject PortfolioService Portfolio
+
+<section id="deployments" class="portfolio-section deployments-section" data-scroll-section>
+    <div class="section-header deployments-header">
+        <div>
+            <div class="section-kicker">03 / SELECTED DEPLOYMENTS</div>
+            <h2 class="section-title section-title--display">Recent field work.</h2>
+        </div>
+        <div class="section-archive-link">VIEW FULL ARCHIVE ↗</div>
+    </div>
+
+    <div class="deployment-list">
+        @foreach (var item in Portfolio.GetProjects().Take(3).Select((project, index) => new { project, index }))
+        {
+            <article class="deployment-row section-panel section-panel--flush">
+                <div class="deployment-index">@($"{item.index + 1:00}")</div>
+                <div class="deployment-copy">
+                    <div class="deployment-meta">@item.project.Id / @item.project.Type.ToUpperInvariant()</div>
+                    <h3>@item.project.Title</h3>
+                    <p>@item.project.Description</p>
+                    <div class="deployment-stack-list">
+                        @foreach (var stack in item.project.Stack)
+                        {
+                            <span class="deployment-tag">@stack</span>
+                        }
+                    </div>
+                </div>
+                <div class="deployment-visual">
+                    <div class="deployment-visual-art deployment-visual-art--@(item.index + 1)">
+                        <div class="visual-shape"></div>
+                    </div>
+                    <div class="deployment-status">
+                        <span class="status-dot"></span>
+                        <span>@item.project.Status.ToUpperInvariant()</span>
+                    </div>
+                </div>
+            </article>
+        }
+    </div>
+</section>

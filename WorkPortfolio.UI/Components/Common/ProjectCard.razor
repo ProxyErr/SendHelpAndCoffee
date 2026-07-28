@@ -1,0 +1,147 @@
+@using System.Collections.Generic
+
+<div class="project-card">
+    <div class="project-header">
+        <div>
+            <span class="project-id">@Project.Id</span>
+            <h3>@Project.Title</h3>
+        </div>
+        <span class="project-status">@Project.Status</span>
+    </div>
+
+    <p class="project-type">@Project.Type</p>
+    <p class="project-description">@Project.Description</p>
+
+    <div class="project-stack">
+        @foreach (var tech in Project.Stack)
+        {
+            <span class="tech-badge">@tech</span>
+        }
+    </div>
+
+    @if (!string.IsNullOrEmpty(Project.Url) || !string.IsNullOrEmpty(Project.GithubUrl))
+    {
+        <div class="project-links">
+            @if (!string.IsNullOrEmpty(Project.Url) && Project.Url != "#")
+            {
+                <MudLink Href="@Project.Url" Target="_blank">View Project →</MudLink>
+            }
+            @if (!string.IsNullOrEmpty(Project.GithubUrl) && Project.GithubUrl != "#")
+            {
+                <MudLink Href="@Project.GithubUrl" Target="_blank">GitHub</MudLink>
+            }
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public Project Project { get; set; } = null!;
+}
+
+<style>
+    .project-card {
+        background: rgba(22, 36, 42, 0.5);
+        border: 1px solid #28383e;
+        border-radius: 12px;
+        padding: 32px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .project-card:hover {
+        background: rgba(22, 36, 42, 0.8);
+        border-color: #28edf1;
+        box-shadow: 0 8px 32px rgba(40, 237, 241, 0.1);
+    }
+
+    .project-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    .project-id {
+        display: inline-block;
+        font-family: "DM Mono", monospace;
+        font-size: 12px;
+        color: #28edf1;
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+
+    .project-header h3 {
+        font-size: 20px;
+        font-weight: 700;
+        color: #e7edf0;
+        margin: 0;
+        font-family: "Manrope", sans-serif;
+    }
+
+    .project-status {
+        background: rgba(40, 237, 241, 0.12);
+        color: #28edf1;
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-size: 12px;
+        font-weight: 600;
+        white-space: nowrap;
+    }
+
+    .project-type {
+        font-size: 13px;
+        color: #89989d;
+        font-weight: 500;
+        margin: 0;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .project-description {
+        font-size: 14px;
+        color: #89989d;
+        line-height: 1.6;
+        margin: 0;
+    }
+
+    .project-stack {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 8px;
+    }
+
+    .tech-badge {
+        background: rgba(40, 237, 241, 0.08);
+        color: #28edf1;
+        padding: 4px 10px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: 500;
+        border: 1px solid rgba(40, 237, 241, 0.2);
+    }
+
+    .project-links {
+        display: flex;
+        gap: 16px;
+        margin-top: 8px;
+        padding-top: 16px;
+        border-top: 1px solid #28383e;
+    }
+
+    .project-links :deep(a) {
+        color: #28edf1;
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 600;
+        transition: color 0.2s ease;
+    }
+
+    .project-links :deep(a:hover) {
+        color: #1dd4d7;
+    }
+</style>

@@ -1,0 +1,311 @@
+@page "/contact"
+@inject PortfolioService Portfolio
+
+<PageTitle>Contact — Alex Morgan</PageTitle>
+
+<div class="contact-page">
+    <div class="contact-container">
+        <div class="page-header">
+            <h1>Let's Connect</h1>
+            <p>Have a project in mind or just want to chat? I'd love to hear from you.</p>
+        </div>
+
+        @if (!FormSubmitted)
+        {
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h2>Get in touch</h2>
+                    <p>I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.</p>
+
+                    <div class="contact-methods">
+                        <div class="contact-method">
+                            <h3>Email</h3>
+                            <MudLink Href="@($"mailto:{Portfolio.GetEmail()}")">
+                                @Portfolio.GetEmail()
+                            </MudLink>
+                        </div>
+                        <div class="contact-method">
+                            <h3>LinkedIn</h3>
+                            <MudLink Href="@Portfolio.GetLinkedin()" Target="_blank">
+                                linkedin.com/in/yourusername
+                            </MudLink>
+                        </div>
+                        <div class="contact-method">
+                            <h3>GitHub</h3>
+                            <MudLink Href="@Portfolio.GetGithub()" Target="_blank">
+                                github.com/yourusername
+                            </MudLink>
+                        </div>
+                    </div>
+                </div>
+
+                <MudCard Class="contact-form-card">
+                    <MudCardContent>
+                        <EditForm Model="@ContactForm" OnValidSubmit="@HandleSubmit">
+                            <DataAnnotationsValidator />
+
+                            <MudTextField 
+                                @bind-Value="@ContactForm.Name" 
+                                Label="Name" 
+                                Variant="Variant.Outlined"
+                                Margin="Margin.Dense"
+                                Class="mb-4" />
+
+                            <MudTextField 
+                                @bind-Value="@ContactForm.Email" 
+                                Label="Email" 
+                                InputType="InputType.Email"
+                                Variant="Variant.Outlined"
+                                Margin="Margin.Dense"
+                                Class="mb-4" />
+
+                            <MudTextField 
+                                @bind-Value="@ContactForm.Subject" 
+                                Label="Subject" 
+                                Variant="Variant.Outlined"
+                                Margin="Margin.Dense"
+                                Class="mb-4" />
+
+                            <MudTextField 
+                                @bind-Value="@ContactForm.Message" 
+                                Label="Message" 
+                                Variant="Variant.Outlined"
+                                Lines="5"
+                                Margin="Margin.Dense"
+                                Class="mb-4" />
+
+                            <div class="form-actions">
+                                <MudButton 
+                                    ButtonType="ButtonType.Submit" 
+                                    Variant="Variant.Filled" 
+                                    Color="Color.Primary"
+                                    Class="submit-button">
+                                    Send Message
+                                </MudButton>
+                                <MudButton 
+                                    OnClick="@ResetForm" 
+                                    Variant="Variant.Outlined"
+                                    Class="reset-button">
+                                    Clear
+                                </MudButton>
+                            </div>
+                        </EditForm>
+                    </MudCardContent>
+                </MudCard>
+            </div>
+        }
+        else
+        {
+            <div class="success-message">
+                <div class="success-icon">
+                    <Blazicon Svg="Lucide.BadgeCheck" class="section-lucide-lg" />
+                </div>
+                <h2>Message Sent!</h2>
+                <p>Thanks for reaching out. I'll get back to you as soon as possible.</p>
+                <MudButton 
+                    OnClick="@ResetForm" 
+                    Variant="Variant.Filled"
+                    Color="Color.Primary"
+                    Class="reset-form-button">
+                    Send Another Message
+                </MudButton>
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+    private bool FormSubmitted = false;
+    private ContactFormModel ContactForm = new();
+
+    private class ContactFormModel
+    {
+        public string Name { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
+        public string Subject { get; set; } = string.Empty;
+        public string Message { get; set; } = string.Empty;
+    }
+
+    private async Task HandleSubmit()
+    {
+        // TODO: Implement actual form submission (email service, API call, etc.)
+        // For now, just show success message
+        await Task.Delay(500); // Simulate processing
+        FormSubmitted = true;
+    }
+
+    private void ResetForm()
+    {
+        ContactForm = new();
+        FormSubmitted = false;
+    }
+}
+
+<style>
+    .contact-page {
+        padding-top: 68px;
+        min-height: 100vh;
+        background: linear-gradient(135deg, rgba(21, 97, 102, 0.08) 0%, transparent 60%);
+    }
+
+    .contact-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 60px 24px;
+    }
+
+    .page-header {
+        text-align: center;
+        margin-bottom: 60px;
+    }
+
+    .page-header h1 {
+        font-size: 48px;
+        font-weight: 800;
+        color: #e7edf0;
+        margin: 0 0 12px 0;
+        font-family: "Manrope", sans-serif;
+    }
+
+    .page-header p {
+        font-size: 16px;
+        color: #89989d;
+        margin: 0;
+    }
+
+    .contact-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        align-items: start;
+    }
+
+    .contact-info h2 {
+        font-size: 24px;
+        font-weight: 700;
+        color: #e7edf0;
+        margin: 0 0 12px 0;
+        font-family: "Manrope", sans-serif;
+    }
+
+    .contact-info > p {
+        color: #89989d;
+        line-height: 1.6;
+        margin: 0 0 32px 0;
+    }
+
+    .contact-methods {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    .contact-method h3 {
+        font-size: 14px;
+        color: #89989d;
+        font-weight: 600;
+        margin: 0;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .contact-method :deep(a) {
+        color: #28edf1;
+        text-decoration: none;
+        font-size: 14px;
+        transition: color 0.2s ease;
+    }
+
+    .contact-method :deep(a:hover) {
+        color: #1dd4d7;
+    }
+
+    .contact-form-card {
+        background: rgba(22, 36, 42, 0.5) !important;
+        border: 1px solid #28383e !important;
+    }
+
+    .contact-form-card :deep(.mud-card-content) {
+        padding: 32px !important;
+    }
+
+    .contact-form-card :deep(.mud-text-field) {
+        width: 100%;
+    }
+
+    .contact-form-card :deep(.mud-input-base-input) {
+        color: #e7edf0;
+    }
+
+    .contact-form-card :deep(.mud-input-label) {
+        color: #89989d;
+    }
+
+    .form-actions {
+        display: flex;
+        gap: 12px;
+        margin-top: 24px;
+    }
+
+    .submit-button {
+        background: #28edf1 !important;
+        color: #091217 !important;
+        font-weight: 600;
+        flex: 1;
+    }
+
+    .submit-button:hover {
+        background: #1dd4d7 !important;
+    }
+
+    .reset-button {
+        border: 2px solid #28edf1 !important;
+        color: #28edf1 !important;
+        font-weight: 600;
+        flex: 1;
+    }
+
+    .success-message {
+        max-width: 500px;
+        margin: 60px auto;
+        text-align: center;
+        padding: 60px;
+        background: rgba(22, 36, 42, 0.5);
+        border: 1px solid #28383e;
+        border-radius: 12px;
+    }
+
+    .success-icon {
+        font-size: 64px;
+        color: #28edf1;
+        margin-bottom: 24px;
+    }
+
+    .success-message h2 {
+        font-size: 32px;
+        font-weight: 800;
+        color: #e7edf0;
+        margin: 0 0 12px 0;
+        font-family: "Manrope", sans-serif;
+    }
+
+    .success-message p {
+        color: #89989d;
+        margin: 0 0 32px 0;
+        line-height: 1.6;
+    }
+
+    .reset-form-button {
+        background: #28edf1 !important;
+        color: #091217 !important;
+        font-weight: 600;
+    }
+
+    .reset-form-button:hover {
+        background: #1dd4d7 !important;
+    }
+
+    .mb-4 {
+        margin-bottom: 16px;
+    }
+</style>

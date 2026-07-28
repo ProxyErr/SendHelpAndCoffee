@@ -1,0 +1,228 @@
+@page "/resume"
+@inject PortfolioService Portfolio
+
+<PageTitle>Resume — Alex Morgan</PageTitle>
+
+<div class="resume-page">
+    <div class="resume-container">
+        <div class="page-header">
+            <h1>Resume</h1>
+            <p>Professional Experience & Education</p>
+        </div>
+
+        <!-- Career Summary -->
+        <MudCard Class="summary-card">
+            <MudCardContent>
+                <h2>Career Summary</h2>
+                <div class="summary-content">
+                    <p>@Portfolio.GetCareerSummary()</p>
+                    <img src="/headshot-on-white.jpg" alt="Professional headshot" class="headshot" />
+                </div>
+            </MudCardContent>
+        </MudCard>
+
+        <!-- Work Experience -->
+        <section class="resume-section">
+            <h2>Work Experience</h2>
+            <div class="experience-list">
+                @foreach (var experience in Portfolio.GetExperiences())
+                {
+                    <MudCard Class="experience-card">
+                        <MudCardContent>
+                            <div class="experience-header">
+                                <div>
+                                    <h3>@experience.JobTitle</h3>
+                                    <p class="company">@experience.Company • @experience.Location</p>
+                                </div>
+                                <MudChip T="string" Size="Size.Small" Color="Color.Primary" Variant="Variant.Text">
+                                    @experience.StartDate - @(experience.EndDate ?? "Present")
+                                </MudChip>
+                            </div>
+                            <p class="experience-summary">@experience.Summary</p>
+                            <div class="experience-tags">
+                                @foreach (var tag in experience.Tags)
+                                {
+                                    <MudChip T="string" Size="Size.Small" Variant="Variant.Outlined">@tag</MudChip>
+                                }
+                            </div>
+                        </MudCardContent>
+                    </MudCard>
+                }
+            </div>
+        </section>
+
+        <!-- Education -->
+        <section class="resume-section">
+            <h2>Education</h2>
+            <div class="education-list">
+                @foreach (var education in Portfolio.GetEducation())
+                {
+                    <MudCard Class="education-card">
+                        <MudCardContent>
+                            <div class="education-header">
+                                <div>
+                                    <h3>@education.Degree</h3>
+                                    <p class="school">@education.School</p>
+                                    <p class="field">@education.Field</p>
+                                </div>
+                                <MudChip T="string" Size="Size.Small" Color="Color.Primary" Variant="Variant.Text">
+                                    @education.StartDate - @(education.EndDate ?? "Present")
+                                </MudChip>
+                            </div>
+                            @if (!string.IsNullOrEmpty(education.Description))
+                            {
+                                <p class="education-description">@education.Description</p>
+                            }
+                        </MudCardContent>
+                    </MudCard>
+                }
+            </div>
+        </section>
+    </div>
+</div>
+
+<style>
+    .resume-page {
+        padding-top: 68px;
+        min-height: 100vh;
+        background: linear-gradient(135deg, rgba(21, 97, 102, 0.08) 0%, transparent 60%);
+    }
+
+    .resume-container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 60px 24px;
+    }
+
+    .page-header {
+        text-align: center;
+        margin-bottom: 60px;
+    }
+
+    .page-header h1 {
+        font-size: 48px;
+        font-weight: 800;
+        color: #e7edf0;
+        margin: 0 0 12px 0;
+        font-family: "Manrope", sans-serif;
+    }
+
+    .page-header p {
+        font-size: 16px;
+        color: #89989d;
+        margin: 0;
+    }
+
+    .summary-card {
+        background: rgba(22, 36, 42, 0.5) !important;
+        border: 1px solid #28383e !important;
+        margin-bottom: 60px;
+    }
+
+    .summary-card :deep(.mud-card-content) {
+        padding: 32px !important;
+    }
+
+    .summary-card h2 {
+        font-size: 24px;
+        font-weight: 700;
+        color: #e7edf0;
+        margin: 0 0 24px 0;
+        font-family: "Manrope", sans-serif;
+    }
+
+    .summary-content {
+        display: flex;
+        gap: 32px;
+        align-items: flex-start;
+    }
+
+    .summary-content p {
+        color: #89989d;
+        line-height: 1.6;
+        margin: 0;
+        flex: 1;
+    }
+
+    .headshot {
+        width: 160px;
+        height: 200px;
+        border-radius: 8px;
+        object-fit: cover;
+    }
+
+    .resume-section {
+        margin-bottom: 60px;
+    }
+
+    .resume-section h2 {
+        font-size: 28px;
+        font-weight: 700;
+        color: #e7edf0;
+        margin: 0 0 24px 0;
+        font-family: "Manrope", sans-serif;
+    }
+
+    .experience-list,
+    .education-list {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .experience-card,
+    .education-card {
+        background: rgba(22, 36, 42, 0.5) !important;
+        border: 1px solid #28383e !important;
+    }
+
+    .experience-card :deep(.mud-card-content),
+    .education-card :deep(.mud-card-content) {
+        padding: 28px !important;
+    }
+
+    .experience-header,
+    .education-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 16px;
+        margin-bottom: 16px;
+    }
+
+    .experience-header h3,
+    .education-header h3 {
+        font-size: 18px;
+        font-weight: 700;
+        color: #e7edf0;
+        margin: 0;
+        font-family: "Manrope", sans-serif;
+    }
+
+    .company,
+    .school,
+    .field {
+        font-size: 14px;
+        color: #89989d;
+        margin: 4px 0 0 0;
+    }
+
+    .field {
+        color: #28edf1;
+        font-weight: 500;
+    }
+
+    .experience-summary,
+    .education-description {
+        color: #89989d;
+        line-height: 1.6;
+        margin: 16px 0 0 0;
+    }
+
+    .experience-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 16px;
+    }
+</style>

@@ -1,0 +1,164 @@
+@using ApexCharts
+
+<section id="profile" class="portfolio-section hero-section" data-scroll-section>
+    <div class="section-grid profile-grid">
+        <div class="profile-copy-panel section-panel section-panel--transparent">
+            <div class="section-kicker-row">
+                <span class="section-kicker">PORTFOLIO SYSTEM / V2.6</span>
+                <span class="section-kicker section-kicker--muted">UPDATED 07.2026</span>
+            </div>
+
+            <div class="hero-copy-block">
+                <div class="mini-label">INDEPENDENT CREATIVE ENGINEER</div>
+                <h1 class="hero-display-title">
+                    <span>I build digital</span>
+                    <span class="hero-display-outline">systems that</span>
+                    <span class="hero-display-outline">move.</span>
+                </h1>
+                <p class="hero-lead-copy">
+                    Product designer and frontend developer turning ambitious ideas into clear,
+                    high-performing experiences for teams shaping what is next.
+                </p>
+            </div>
+
+            <div class="hero-action-row">
+                <a href="#deployments" data-scroll-target="deployments" class="action-button action-button--primary">
+                    <span>View deployments</span>
+                    <Blazicon Svg="Lucide.SquareArrowUpRight" class="section-lucide" />
+                </a>
+                <a href="#contact" data-scroll-target="contact" class="action-button action-button--ghost">
+                    <Blazicon Svg="Lucide.Download" class="section-lucide" />
+                    <span>Download profile</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="hero-radar-panel section-panel">
+            <div class="radar-panel-header">
+                <span>SYS / RADAR</span>
+                <span>LIVE</span>
+            </div>
+            <div class="radar-chart-wrap">
+                <ApexChart TItem="RadarSignal" Height="290" Options="RadarOptions">
+                    <ApexPointSeries TItem="RadarSignal"
+                                     Items="RadarSignals"
+                                     Name="Signal"
+                                     SeriesType="SeriesType.Radar"
+                                     XValue="@(point => point.Category)"
+                                     YValue="@(point => point.Value)" />
+                </ApexChart>
+            </div>
+            <div class="radar-panel-footer">
+                <span>5 DISCIPLINES CONNECTED</span>
+                <span>SIGNAL STRENGTH 94%</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="stats-band section-panel section-panel--flush">
+        <div class="stat-tile">
+            <div class="stat-value">05+</div>
+            <div class="stat-label">YEARS DEVELOPING</div>
+        </div>
+        <div class="stat-tile">
+            <div class="stat-value">42</div>
+            <div class="stat-label">PRODUCTS SHIPPED</div>
+        </div>
+        <div class="stat-tile">
+            <div class="stat-value">12</div>
+            <div class="stat-label">DESIGN SYSTEMS</div>
+        </div>
+        <div class="stat-tile">
+            <div class="stat-value">06</div>
+            <div class="stat-label">INDUSTRY AWARDS</div>
+        </div>
+    </div>
+</section>
+
+@code {
+    private List<RadarSignal> RadarSignals { get; } =
+    [
+        new("Strategy", 76),
+        new("Design", 91),
+        new("Code", 99),
+        new("Logic", 88),
+        new("Systems", 79)
+    ];
+
+    private ApexChartOptions<RadarSignal> RadarOptions { get; } = new()
+    {
+        Chart = new Chart
+        {
+            Toolbar = new Toolbar { Show = false },
+            Background = "transparent"
+        },
+        Stroke = new Stroke
+        {
+            Show = true,
+            Curve = Curve.Straight,
+            Width = 3,
+            Colors = new List<string> { "#eff2c0" }
+        },
+        Fill = new Fill
+        {
+            Opacity = 0.34,
+            Colors = new List<string> { "#eff2c0" }
+        },
+        Markers = new Markers
+        {
+            Size = 4,
+            Colors = new List<string> { "#eff2c0" },
+            StrokeColors = "#eff2c0"
+        },
+        DataLabels = new DataLabels { Enabled = false },
+        Legend = new Legend { Show = false },
+        Theme = new Theme { Mode = Mode.Dark },
+        PlotOptions = new PlotOptions
+        {
+            Radar = new PlotOptionsRadar
+            {
+                Size = 125,
+                OffsetY = 6,
+                Polygons = new RadarPolygons
+                {
+                    StrokeColors = "rgba(190, 165, 125, 0.26)",
+                    StrokeWidth = 1,
+                    ConnectorColors = "rgba(164, 186, 183, 0.18)",
+                    Fill = new RadarPolygonsFill
+                    {
+                        Colors = new List<string>
+                        {
+                            "rgba(239, 242, 192, 0.10)",
+                            "rgba(190, 165, 125, 0.035)"
+                        }
+                    }
+                }
+            }
+        },
+        Grid = new Grid { BorderColor = "rgba(190, 165, 125, 0.24)" },
+        Xaxis = new XAxis
+        {
+            Labels = new XAxisLabels
+            {
+                Style = new AxisLabelStyle
+                {
+                    Colors = new List<string> { "#a4bab7", "#a4bab7", "#a4bab7", "#a4bab7", "#a4bab7" },
+                    FontFamily = "DM Mono, monospace",
+                    FontSize = "11px"
+                }
+            }
+        },
+        Yaxis = new List<YAxis>
+        {
+            new()
+            {
+                Show = false,
+                Min = 0,
+                Max = 100,
+                TickAmount = 4
+            }
+        }
+    };
+
+    public record RadarSignal(string Category, decimal Value);
+}

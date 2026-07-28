@@ -1,0 +1,29 @@
+@inherits LayoutComponentBase
+@inject IJSRuntime JS
+
+<MudThemeProvider IsDarkMode="true" />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<div class="site-shell" data-portfolio-shell>
+    <div class="noise" aria-hidden="true"></div>
+    <NavBar />
+    <div class="portfolio-frame">
+        <Sidebar />
+        <main class="portfolio-main">
+            @Body
+        </main>
+    </div>
+</div>
+
+@code {
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender)
+        {
+            return;
+        }
+
+        await JS.InvokeVoidAsync("portfolioShell.refresh");
+    }
+}

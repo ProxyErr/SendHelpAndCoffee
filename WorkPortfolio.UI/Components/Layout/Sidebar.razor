@@ -1,0 +1,59 @@
+@inject PortfolioService Portfolio
+
+<aside class="sidebar-rail">
+    <div class="sidebar-brand-panel">
+        <div class="operator-badge">
+            <div class="operator-badge-ring">
+                <span>CB</span>
+            </div>
+        </div>
+        <div class="operator-copy">
+            <div class="eyebrow">OPERATOR ID</div>
+            <div class="operator-name">Chris Baker</div>
+            <div class="operator-role">Thinker / Developer</div>
+        </div>
+    </div>
+
+    <nav class="sidebar-nav" aria-label="Section navigation">
+        <a href="#profile" data-scroll-target="profile" class="sidebar-link is-active">
+            <span class="sidebar-code">01</span>
+            <span>Profile</span>
+        </a>
+        <a href="#capabilities" data-scroll-target="capabilities" class="sidebar-link">
+            <span class="sidebar-code">02</span>
+            <span>Capabilities</span>
+        </a>
+        <a href="#deployments" data-scroll-target="deployments" class="sidebar-link">
+            <span class="sidebar-code">03</span>
+            <span>Deployments</span>
+        </a>
+        <a href="#contact" data-scroll-target="contact" class="sidebar-link">
+            <span class="sidebar-code">04</span>
+            <span>Contact</span>
+        </a>
+    </nav>
+
+    <div class="sidebar-footer">
+        <div class="local-signal">
+            <div class="local-signal-label">LOCAL SIGNAL</div>
+            <div class="local-signal-value">BROOKLYN, NY</div>
+        </div>
+
+        <a href="#contact" data-scroll-target="contact" class="start-project-link">
+            <span>Start a project</span>
+            <Blazicon Svg="Lucide.SquareArrowUpRight" class="sidebar-lucide" />
+        </a>
+
+        <div class="sidebar-socials" aria-label="External links">
+            <a href="@Portfolio.GetGithub()" target="_blank" rel="noopener noreferrer" class="sidebar-social-link" aria-label="GitHub">
+                <Blazicon Svg="Lucide.FolderGit2" class="sidebar-lucide" />
+            </a>
+            <a href="@Portfolio.GetLinkedin()" target="_blank" rel="noopener noreferrer" class="sidebar-social-link" aria-label="LinkedIn">
+                <Blazicon Svg="Lucide.BriefcaseBusiness" class="sidebar-lucide" />
+            </a>
+            <a href="@($"mailto:{Portfolio.GetEmail()}")" class="sidebar-social-link" aria-label="Email">
+                <Blazicon Svg="Lucide.Mail" class="sidebar-lucide" />
+            </a>
+        </div>
+    </div>
+</aside>

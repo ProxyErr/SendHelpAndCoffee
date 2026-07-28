@@ -1,0 +1,64 @@
+@page "/projects"
+@inject PortfolioService Portfolio
+
+<PageTitle>Projects — Alex Morgan</PageTitle>
+
+<div class="projects-page">
+    <div class="page-header">
+        <h1>Projects</h1>
+        <p>A comprehensive look at the work I've built and contributed to</p>
+    </div>
+
+    <div class="projects-container">
+        <div class="projects-grid">
+            @foreach (var project in Portfolio.GetProjects())
+            {
+                <ProjectCard Project="@project" />
+            }
+        </div>
+    </div>
+</div>
+
+<style>
+    .projects-page {
+        padding-top: 68px;
+        min-height: 100vh;
+        background: linear-gradient(135deg, rgba(21, 97, 102, 0.08) 0%, transparent 60%);
+    }
+
+    .page-header {
+        max-width: 1200px;
+        margin: 60px auto 60px;
+        padding: 0 24px;
+        text-align: center;
+    }
+
+    .page-header h1 {
+        font-size: 48px;
+        font-weight: 800;
+        color: #e7edf0;
+        margin: 0 0 12px 0;
+        font-family: "Manrope", sans-serif;
+    }
+
+    .page-header p {
+        font-size: 16px;
+        color: #89989d;
+        margin: 0;
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .projects-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 24px 80px;
+    }
+
+    .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 32px;
+    }
+</style>

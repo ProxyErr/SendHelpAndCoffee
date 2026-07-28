@@ -1,0 +1,49 @@
+@inject PortfolioService Portfolio
+
+<section id="contact" class="portfolio-section contact-section" data-scroll-section>
+    <div class="section-header contact-header">
+        <div>
+            <div class="section-kicker">04 / CONTACT</div>
+            <h2 class="section-title section-title--display">Build something signal-worthy.</h2>
+        </div>
+        <p class="section-aside-copy">
+            Open for collaborations, contract work, and product conversations that need design and code in the same room.
+        </p>
+    </div>
+
+    <div class="contact-layout">
+        <div class="section-panel contact-panel contact-panel--primary">
+            <div class="panel-header-row">
+                <span>TRANSMISSION LINE</span>
+                <span>OPEN</span>
+            </div>
+            <div class="contact-method-grid">
+                <a href="@($"mailto:{Portfolio.GetEmail()}")" class="contact-method-card">
+                    <span class="contact-method-label">EMAIL</span>
+                    <strong>@Portfolio.GetEmail()</strong>
+                </a>
+                <a href="@Portfolio.GetLinkedin()" target="_blank" rel="noopener noreferrer" class="contact-method-card">
+                    <span class="contact-method-label">LINKEDIN</span>
+                    <strong>linkedin.com/in/yourusername</strong>
+                </a>
+                <a href="@Portfolio.GetGithub()" target="_blank" rel="noopener noreferrer" class="contact-method-card">
+                    <span class="contact-method-label">GITHUB</span>
+                    <strong>github.com/yourusername</strong>
+                </a>
+            </div>
+        </div>
+
+        <div class="section-panel contact-panel contact-panel--secondary">
+            <div class="contact-cta-block">
+                <div class="mini-label">READY TO START</div>
+                <p>
+                    Need a portfolio-grade marketing site, a product UI, or a design system that feels engineered instead of improvised?
+                </p>
+                <a href="@($"mailto:{Portfolio.GetEmail()}")" class="action-button action-button--primary">
+                    <span>Start a project</span>
+                    <Blazicon Svg="Lucide.SquareArrowUpRight" class="section-lucide" />
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
